@@ -1,5 +1,7 @@
 package org.housemart.pic.api;
 
+import java.io.Serializable;
+
 /**
  * 
 * @ClassName: PicSaveResult
@@ -7,7 +9,12 @@ package org.housemart.pic.api;
 * @date 2013-2-24 下午10:32:25
 *
  */
-public class PicSaveResult {
+public class PicSaveResult implements Serializable {
+	
+	/**
+	* @Fields serialVersionUID : TODO
+	*/
+	private static final long serialVersionUID = 277781566789680357L;
 	
 	private int code;
 	private String url;
