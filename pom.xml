@@ -6,5 +6,6 @@
   <packaging>pom</packaging>
   <modules>
   	<module>housemart-framework</module>
+  	<module>housemart-pic-interface</module>
   </modules>
 </project>
