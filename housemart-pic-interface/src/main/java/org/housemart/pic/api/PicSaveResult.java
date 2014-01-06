@@ -16,6 +16,10 @@ public class PicSaveResult implements Serializable {
 	*/
 	private static final long serialVersionUID = 277781566789680357L;
 	
+	PicSaveResult(){
+		
+	}
+	
 	private int code;
 	private String url;
 	/**
