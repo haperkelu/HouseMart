@@ -7,5 +7,6 @@
   <modules>
   	<module>housemart-framework</module>
   	<module>housemart-pic-interface</module>
+  	<module>housemart-rpc-interface</module>
   </modules>
 </project>
