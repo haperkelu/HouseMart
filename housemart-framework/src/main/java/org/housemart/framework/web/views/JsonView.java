@@ -27,6 +27,7 @@ public class JsonView extends AbstractView {
 		resp.setHeader("Content-Type", "application/json");
 		Object jsonObj = map.get("json");
 		String result = mapper.writeValueAsString(jsonObj);
+		req.setAttribute("JSON_RESULT", result);
 		resp.getWriter().write(result);
 		
 	}
