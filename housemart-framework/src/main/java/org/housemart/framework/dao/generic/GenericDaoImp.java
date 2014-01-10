@@ -32,7 +32,7 @@ public class GenericDaoImp<T> extends SqlMapClientDaoSupport implements GenericD
 		return result;
 	}
 	
-	public int add(String statementid, Object para) {		
+	public int add(String statementid, Object para) {	
 		Object o = getSqlMapClientTemplate().insert(getNamespaceStatement(statementid), para);
 		return Integer.parseInt(o.toString());
 	}
@@ -75,7 +75,13 @@ public class GenericDaoImp<T> extends SqlMapClientDaoSupport implements GenericD
 		return result;
 	}
 
+	/**
+	 * 
+	 */
 	public int delete(String statementid, Object obj) {
+		if(obj != null && obj instanceof Integer){
+			return this.delete(statementid, ((Integer)obj).intValue());
+		}
 		return getSqlMapClientTemplate().delete(getNamespaceStatement(statementid), obj);
 	}
 
