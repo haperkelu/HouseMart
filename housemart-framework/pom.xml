@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>housemart-framework</artifactId>
-	<version>0.0.8-SNAPSHOT</version>
+	<version>0.0.9-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
 			<groupId>commons-collections</groupId>
@@ -84,7 +84,11 @@
 			<artifactId>slf4j-log4j12</artifactId>
 			<version>1.5.11</version>
 		</dependency>
-
+  		<dependency>
+  			<groupId>org.apache.httpcomponents</groupId>
+  			<artifactId>httpclient</artifactId>
+  			<version>4.0</version>
+  		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
