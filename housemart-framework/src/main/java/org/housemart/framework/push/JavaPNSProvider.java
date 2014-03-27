@@ -116,11 +116,12 @@ public class JavaPNSProvider {
 						+ "flag=" + flag);
 			}
 			logger.error(erroMsg.toString());
+			logger.error("发送失败：" + message);
 			return erroMsg.toString();
 		}
 		else
 		{
-			logger.error(message);
+			logger.error("发送成功：" + message);
 			return "";
 		}
 	}
