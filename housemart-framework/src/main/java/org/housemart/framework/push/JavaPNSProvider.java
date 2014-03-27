@@ -120,6 +120,7 @@ public class JavaPNSProvider {
 		}
 		else
 		{
+			logger.error(message);
 			return "";
 		}
 	}
