@@ -121,7 +121,7 @@ public class JavaPNSProvider {
 		}
 		else
 		{
-			logger.error("发送成功：" + message);
+			logger.info("发送成功：" + message);
 			return "";
 		}
 	}
