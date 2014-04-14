@@ -121,8 +121,16 @@ public class JavaPNSProvider {
 		}
 		else
 		{
-			logger.error("发送成功：" + message);
-			return "";
+			if (notification.isSuccessful())
+			{
+				logger.info("发送成功：" + message);
+				return "";
+			}
+			else
+			{
+				logger.error("发送失败：" + message);
+				return "发送失败";
+			}
 		}
 	}
 	
