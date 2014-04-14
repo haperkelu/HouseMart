@@ -29,8 +29,9 @@ public interface GenericDao<T> {
 	
 	<S> List<S> selectByType(String statementid, Object args);
 	
-	PaginateObject paginate(String statementid, int pageNo, int pageSize,
-			Object para);
+	PaginateObject paginate(String statementid, int pageNo, int pageSize, Object para);
+	
+	PaginateObject paginate(String statementid, int pageNo, int pageSize, Object para,String countStatement);
 }
 
 

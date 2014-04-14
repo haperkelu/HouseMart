@@ -122,5 +122,27 @@ public class GenericDaoImp<T> extends SqlMapClientDaoSupport implements GenericD
 		return obj;
 	}
 
+	@Override
+	public PaginateObject paginate(String statementid, int pageNo,
+			int pageSize, Object para, String countStatement) {
+		PaginateObject obj = new PaginateObject();
+		List<Object> result = null;
+		
+		result = getSqlMapClientTemplate().queryForList(getNamespaceStatement(countStatement), para);
+		int count = CollectionUtils.isEmpty(result) ? 0: result.size();
+		
+		if(para != null && para instanceof Map){
+			((Map)para).put("skip", pageNo == 0 ? 0: pageNo * pageSize);
+			((Map)para).put("count", pageSize);
+		}
+		result = getSqlMapClientTemplate().queryForList(getNamespaceStatement(statementid), para);
+		obj.setResult(result);
+		obj.setPageNo(pageNo);
+		obj.setPageSize(pageSize);
+		obj.setCount(count);
+		
+		return obj;
+	}
+
 
 }
