@@ -2,8 +2,8 @@ package org.housemart.framework.dao.generic;
 
 import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.collections.CollectionUtils;
-import org.housemart.framework.dao.generic.PaginateObject;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 
@@ -128,8 +128,8 @@ public class GenericDaoImp<T> extends SqlMapClientDaoSupport implements GenericD
 		PaginateObject obj = new PaginateObject();
 		List<Object> result = null;
 		
-		result = getSqlMapClientTemplate().queryForList(getNamespaceStatement(countStatement), para);
-		int count = CollectionUtils.isEmpty(result) ? 0: result.size();
+		Integer count = (Integer) getSqlMapClientTemplate().queryForObject(getNamespaceStatement(countStatement), para);
+		int countValue = (count == null) ? 0: count.intValue();
 		
 		if(para != null && para instanceof Map){
 			((Map)para).put("skip", pageNo == 0 ? 0: pageNo * pageSize);
@@ -139,7 +139,7 @@ public class GenericDaoImp<T> extends SqlMapClientDaoSupport implements GenericD
 		obj.setResult(result);
 		obj.setPageNo(pageNo);
 		obj.setPageSize(pageSize);
-		obj.setCount(count);
+		obj.setCount(countValue);
 		
 		return obj;
 	}
