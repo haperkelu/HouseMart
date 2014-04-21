@@ -9,7 +9,9 @@
 package org.housemart.framework.push;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.housemart.framework.config.SecurityConfigService;
 import org.housemart.framework.utils.CommonUtils;
@@ -22,6 +24,7 @@ import javapns.notification.AppleNotificationServerBasicImpl;
 import javapns.notification.PushNotificationManager;
 import javapns.notification.PushNotificationPayload;
 import javapns.notification.PushedNotification;
+import javapns.notification.ResponsePacket;
 
 /**
  * @ClassName: JavaPNSProvider
@@ -59,6 +62,7 @@ public class JavaPNSProvider {
 	* @param @param devideToken   客户端token串
 	* @param @param message       发送消息
 	* @param @param count         应用图标上小红圈上的数值    
+	* @param @param flag          发送对象是否为大众版    
 	* @param @throws Exception
 	* @return void
 	* @throws
@@ -131,6 +135,96 @@ public class JavaPNSProvider {
 				logger.error("发送失败：" + message);
 				return "发送失败";
 			}
+		}
+	}
+	
+	/**
+	 * 
+	* @Title: pushMessageToAPNS
+	* @Description: TODO
+	* @param @param messageList 消息发送队列
+	* @param @param flag        发送对象是否为大众版    
+	* @param @throws Exception
+	* @return void
+	* @throws
+	 */
+	public static String pushMessageToAPNS(Map<String, String>[] messageList, boolean flag) throws Exception
+	{
+		if (messageList == null)
+		{
+			return "";
+		} 
+		
+		PushNotificationManager pushManager = new PushNotificationManager();	
+		if(flag == true)
+		{
+			pushManager.initializeConnection(new AppleNotificationServerBasicImpl(_path, _password,  true));
+		}
+		else
+		{
+			pushManager.initializeConnection(new AppleNotificationServerBasicImpl(_broker_path, _password,  true));
+		}		
+		
+		List<PushedNotification> list = new ArrayList<PushedNotification>();
+		
+		try
+		{
+			for (int i = 0; i < messageList.length; i++)
+			{
+				
+				Map<String, String> message = messageList[i];
+				
+				String content = message.get("content");
+				String deviceToken = message.get("deviceToken");
+				
+				PushNotificationPayload payLoad = PushNotificationPayload.complex();
+				payLoad.addAlert(content);
+				payLoad.addBadge(1); 
+				payLoad.addSound("default");
+				
+				Device device = new BasicDevice();
+				logger.info("original token:" + deviceToken);
+				final String decodedToken = CommonUtils.decodeDeviceId(deviceToken);
+				device.setToken(decodedToken);
+				logger.info("token:" + decodedToken);
+			
+				PushedNotification notification = pushManager.sendNotification(device, payLoad, false);
+				list.add(notification);
+				
+				if (!notification.isSuccessful())
+				{
+					logger.error((flag ? "大众版" : "经纪人版") + "发送失败: " + deviceToken + " - " + content );
+					
+					ResponsePacket response = notification.getResponse();
+					if (notification != null)
+					{
+						logger.error("APNS错误信息:" + response.getMessage());
+					}
+				}
+			}
+		}
+		catch(Exception ex)
+		{
+			logger.error("APNS Exception:" + ex.getMessage());
+		}
+		finally
+		{
+			pushManager.stopConnection();
+		}
+		
+		List<PushedNotification> failedNotifications = PushedNotification.findFailedNotifications(list);
+		
+		if(!CollectionUtils.isEmpty(failedNotifications))
+		{
+			int failed = failedNotifications.size();  
+			StringBuilder erroMsg = new StringBuilder();
+			erroMsg.append("失败条数=" + failed + "; ");
+			
+			return erroMsg.toString();
+		}
+		else
+		{
+			return "";
 		}
 	}
 	
