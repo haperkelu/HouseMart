@@ -148,7 +148,7 @@ public class JavaPNSProvider {
 	* @return void
 	* @throws
 	 */
-	public static String pushMessageToAPNS(Map<String, String>[] messageList, boolean flag) throws Exception
+	public static String pushMessageListToAPNS(Map<String, String>[] messageList, boolean flag) throws Exception
 	{
 		if (messageList == null)
 		{
