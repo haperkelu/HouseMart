@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.housemart.dao.entities.ClientRegisterEntity;
 import org.housemart.framework.config.SecurityConfigService;
 import org.housemart.framework.utils.CommonUtils;
 import org.slf4j.Logger;
