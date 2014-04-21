@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.housemart.dao.entities.ClientRegisterEntity;
 import org.housemart.framework.config.SecurityConfigService;
 import org.housemart.framework.utils.CommonUtils;
 import org.slf4j.Logger;
@@ -148,7 +149,7 @@ public class JavaPNSProvider {
 	* @return void
 	* @throws
 	 */
-	public static String pushMessageListToAPNS(Map<String, String>[] messageList, boolean flag) throws Exception
+	public static String pushMessageListToAPNS(List<Map<String, String>> messageList, boolean flag) throws Exception
 	{
 		if (messageList == null)
 		{
@@ -169,10 +170,8 @@ public class JavaPNSProvider {
 		
 		try
 		{
-			for (int i = 0; i < messageList.length; i++)
+			for (Map<String, String> message : messageList)
 			{
-				
-				Map<String, String> message = messageList[i];
 				
 				String content = message.get("content");
 				String deviceToken = message.get("deviceToken");
